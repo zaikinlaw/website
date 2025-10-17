@@ -314,7 +314,9 @@ img {
 }
 
 .services-grid {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.5rem;
   margin-top: 1.5rem;
@@ -328,6 +330,7 @@ img {
   cursor: pointer;
   text-align: left;
   overflow: visible;
+  flex: 1 1 260px;
 }
 
 .service:hover {
@@ -837,4 +840,5 @@ img {
     padding-bottom: 2rem;
   }
 }
+
 
