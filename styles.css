@@ -89,6 +89,14 @@ img {
   width: 100%;
 }
 
+.more {
+  color: #730000;
+  font-weight: 500;
+  font-size: 0.8em;
+  margin-top: 8px;
+  transition: color 0.2s ease;
+}
+
 @media (max-width: 768px) {
   .header-inner {
     flex-direction: column;
@@ -829,3 +837,4 @@ img {
     padding-bottom: 2rem;
   }
 }
+
