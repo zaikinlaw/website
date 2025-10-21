@@ -714,8 +714,8 @@ img {
   box-shadow: 0 20px 40px rgba(115, 0, 0, 0.14);
 }
 .fab svg {
-  width: 30px;
-  height: 30px;
+  width: 50px;
+  height: 50px;
   display: block;
 }
 
@@ -840,5 +840,6 @@ img {
     padding-bottom: 2rem;
   }
 }
+
 
 
