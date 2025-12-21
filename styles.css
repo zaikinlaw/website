@@ -143,6 +143,11 @@ img {
   height: 60vh;
 }
 
+.hero-section--compact {
+  padding: 2rem 0 0 0;
+  height: 25vh;
+}
+
 .hero-decor-lines {
   position: absolute;
   top: 0;
@@ -840,6 +845,7 @@ img {
     padding-bottom: 2rem;
   }
 }
+
 
 
 
