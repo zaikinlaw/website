@@ -50,8 +50,8 @@ img {
   width: 48px;
   height: 48px;
   padding: 8px;
-  border: 2px solid #730000;
-  border-radius: 0px;
+  border: 1px solid #730000;
+  border-radius: 4px;
   background: transparent;
   display: flex;
   align-items: center;
@@ -846,6 +846,7 @@ img {
     padding-bottom: 2rem;
   }
 }
+
 
 
 
