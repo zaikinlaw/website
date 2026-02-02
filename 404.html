@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Страница не найдена| Андрей Заикин</title>
+    <meta
+      content="Политика конфиденциальности и обработки персональных данных."
+      name="description"
+    />
+    <!-- Fonts: Manrope (headings) + Inter (text) -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link href="logo.png" rel="icon" />
+    <link href="./styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="index.html">
+          <img alt="Андрей Заикин" class="brand-icon" src="logo.png" />
+          <span class="brand-text">
+            <span class="brand-name">Андрей Заикин</span>
+            <span class="brand-role">Юрист в Челябинске</span>
+          </span>
+        </a>
+        
+    </header>
+
+    <div class="container">
+        <h1>Страница не найдена</h1>
+        <p>Возможно, ссылка устарела или была введена с ошибкой.</p>
+        <p class="link"><a href="index.html">На главную</a></p>
+    </div>
+
+      <footer class="site-footer">
+        <div class="container footer-inner">
+          <p class="muted" style="margin-bottom: 0">
+            © <span id="year"></span> ИП Заикин Андрей Вячеславович,
+            ‌зарегистрирован МИФНС N 17 ‌по Челябинской области 01.08.2023 г.,
+            ОГРНИП 323745600117431, ‌г. Челябинск
+          </p>
+          <p class="muted" style="margin-top: 0">
+            Просматривая этот сайт, вы даете свое согласие на использование
+            файлов Cookie.
+            <a class="link subtle" href="policy.html"
+              >Политика конфиденциальности</a
+            >.
+          </p>
+          <div class="footer-links">
+            <a class="link subtle" href="index.html">На главную</a>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <script>
+      // ===== Year =====
+      const yearEl = document.getElementById("year");
+      if (yearEl) {
+        yearEl.textContent = new Date().getFullYear();
+      }
+
+     </script>
+  </body>
+</html>

@@ -1,5 +1,4 @@
 User-agent: *
-Allow: /
+Disallow: /policy.html
 
 Sitemap: https://zaikin-law.ru/sitemap.xml
-Host: zaikin-law.ru
