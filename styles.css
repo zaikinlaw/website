@@ -23,7 +23,7 @@
   --h4: 0.98rem;
 
   --lead: 1.1rem;
-  --base: 16px;
+  --base: 18px;
   --lh: 1.6;
 }
 
@@ -169,6 +169,7 @@ a:focus {
 
 /* Header */
 .site-header {
+  font-size: 0.8rem;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -194,8 +195,8 @@ a:focus {
 
 .brand-icon {
   /* Placeholder for logo/icon. Height matches the two-line brand text block visually */
-  width: 42px;
-  height: 42px;
+  width: 35px;
+  height: 35px;
   flex: 0 0 auto;
 }
 .brand-text {
@@ -208,7 +209,6 @@ a:focus {
 }
 .brand-role {
   color: var(--muted);
-  font-size: 0.92rem;
   margin-top: 2px;
 }
 
@@ -220,7 +220,6 @@ a:focus {
 }
 .nav-link {
   position: relative;
-  font-size: 0.96rem;
   color: var(--muted);
   padding: 8px 6px;
   border-radius: 10px;
@@ -400,7 +399,6 @@ a:focus {
   margin-top: 10px;
 }
 .tag {
-  font-size: 0.92rem;
   color: var(--muted);
   padding: 8px 12px;
   border-radius: 999px;
@@ -663,7 +661,7 @@ textarea {
   }
 }
 
-/* Underline animation for header/nav links (mv.legal-like) */
+/* Underline animation for header/nav links*/
 .nav-link::after {
   content: "";
   position: absolute;
@@ -699,6 +697,20 @@ textarea {
 @media (min-width: 1050px) {
   .cards-services {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.cards-cases {
+  grid-template-columns: 3fr;
+}
+@media (min-width: 720px) {
+  .cards-cases {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+@media (min-width: 1050px) {
+  .cards-cases {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -858,7 +870,7 @@ textarea {
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 92px; /* чтобы якорь не прятался под sticky header */
+  scroll-padding-top: 92px;
 }
 
 /* базовое состояние до появления */
@@ -893,7 +905,7 @@ html {
 
 @media (min-width: 900px) {
   .section {
-    padding-top: 86px;
+    padding-top: 64px;
     padding-bottom: 0;
   }
 }
@@ -910,3 +922,102 @@ html {
     grid-template-columns: 0.8fr 1.2fr;
   }
 }
+/* карточки кейсов */
+/* Кейсы — фоновая большая цифра */
+.card-cases {
+  position: relative;
+  overflow: hidden; /* чтобы цифра не вылезала за границы */
+}
+
+.case-bg-number {
+  position: absolute;
+  top: 8%;
+  right: 5%;
+  font-family: Manrope, sans-serif;
+  font-size: clamp(4rem, 12vw, 7rem); /* адаптивный крупный размер */
+  font-weight: 900;
+  line-height: 1;
+  color: var(--muted);
+  opacity: 0.08; /* едва заметно — можно уменьшить до 0.06 */
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Мета-строка с номером дела и судом */
+.case-meta {
+  margin: 6px 0 12px 0;
+  font-size: 0.88rem;
+  color: var(--muted-2);
+  font-weight: 500;
+}
+
+/* Результат в конце карточки */
+.case-result {
+  margin-top: 12px;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+/* Мобильный горизонтальный скролл (для 3 карточек почти не нужен, но оставляем) */
+@media (max-width: 899px) {
+  .cards-cases {
+    display: flex;
+    overflow-x: auto;
+    gap: 16px;
+    padding: 4px 0 28px 0; /* ← вот ключ: +24–32px снизу */
+    scroll-snap-type: x proximity;
+    margin-bottom: 12px; /* опционально, если нужно ещё больше воздуха перед rule */
+  }
+
+  .card-cases {
+    flex: 0 0 82%;
+    scroll-snap-align: start;
+    /* Убедись, что карточка не обрезает свою тень */
+    margin-bottom: 0; /* на всякий случай */
+  }
+
+  .cards-cases::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Десктоп — 3 в ряд */
+@media (min-width: 900px) {
+  .cards-cases {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .card-cases {
+    flex: none;
+  }
+}
+
+/* Лёгкий hover для карточек (был раньше, оставляем) */
+.card-cases:hover {
+  border-color: rgba(30, 41, 59, 0.22);
+  box-shadow: 0 16px 40px rgba(2, 6, 23, 0.07);
+  transform: translateY(-3px);
+}
+/* Результат: только слово "Результат:" выделено */
+.case-result {
+  margin-top: 12px;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.result-label {
+  font-weight: 700; /* жирный только для "Результат:" */
+  color: var(--text); /* почти чёрный, чтобы выделялся */
+}
+
+/* Мета-строка теперь внизу */
+.case-meta {
+  margin: 14px 0 0 0; /* небольшой отступ сверху */
+  font-size: 0.86rem;
+  color: var(--muted-2);
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+/* Остальные стили (фоновая цифра, мобильный скролл, grid) остаются как в предыдущем сообщении */
