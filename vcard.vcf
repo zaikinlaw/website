@@ -1,0 +1,12 @@
+BEGIN:VCARD
+VERSION:3.0
+FN;CHARSET=UTF-8:Андрей Заикин
+N;CHARSET=UTF-8:Заикин;Андрей;;;
+TITLE;CHARSET=UTF-8:Юрист
+ORG;CHARSET=UTF-8:Договоры, арбитраж, сопровождение бизнеса
+TEL;TYPE=CELL,VOICE:+79090771610
+EMAIL;TYPE=INTERNET,WORK:contact@zaikin-law.ru
+URL;TYPE=WORK:https://zaikin-law.ru
+X-SOCIALPROFILE;TYPE=telegram:https://t.me/zaikin_law
+PHOTO;VALUE=URI:https://zaikin-law.ru/signature.jpg
+END:VCARD
