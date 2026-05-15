@@ -8,5 +8,5 @@ TEL;TYPE=CELL,VOICE:+79090771610
 EMAIL;TYPE=INTERNET,WORK:contact@zaikin-law.ru
 URL;TYPE=WORK:https://zaikin-law.ru
 X-SOCIALPROFILE;TYPE=telegram:https://t.me/zaikin_law
-PHOTO;VALUE=URI:https://zaikin-law.ru/signature.jpg
+PHOTO;TYPE=JPEG;VALUE=URI:https://zaikin-law.ru/signature.jpg
 END:VCARD
