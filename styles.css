@@ -456,6 +456,9 @@ main > .section:last-child {
   width: 100%;
   height: min(50vh, 520px);
   background-image: url("photo.webp");
+  background-size: cover;
+  background-position: top center;
+  background-repeat: no-repeat;
 }
 
 /*Main section and photo settings for mobile*/
