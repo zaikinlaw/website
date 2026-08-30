@@ -78,11 +78,23 @@ a:focus {
 }
 
 .section {
-  padding: 15px 0;
+  padding-top: 28px;
+  padding-bottom: 0;
 }
 @media (min-width: 900px) {
   .section {
-    padding: 86px 0;
+    padding-top: 40px;
+    padding-bottom: 0;
+  }
+}
+
+/* нижний отступ только у последней секции (без rule после неё) */
+main > .section:last-child {
+  padding-bottom: 28px;
+}
+@media (min-width: 900px) {
+  main > .section:last-child {
+    padding-bottom: 40px;
   }
 }
 
@@ -101,7 +113,13 @@ a:focus {
   height: 1px;
   width: 100%;
   background: var(--border-soft);
-  margin-top: 64px;
+  margin-top: 28px;
+  margin-bottom: 0;
+}
+@media (min-width: 900px) {
+  .rule {
+    margin-top: 40px;
+  }
 }
 
 /* Typography */
@@ -260,6 +278,16 @@ a:focus {
     opacity 0.2s ease;
 }
 
+.nav-toggle[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.nav-toggle[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+.nav-toggle[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
 @media (min-width: 900px) {
   .nav {
     display: flex;
@@ -273,15 +301,30 @@ a:focus {
 }
 
 /* Mobile nav */
-.mobile-nav {
+.mobile-nav:not([hidden]) {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
   border-top: 1px solid var(--border-soft);
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
+  box-shadow: 0 14px 30px rgba(2, 6, 23, 0.08);
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  transition: grid-template-rows 0.3s ease;
+}
+
+.mobile-nav.is-open {
+  grid-template-rows: 1fr;
 }
 .mobile-nav-inner {
   padding: 14px 0 22px 0;
   display: grid;
   gap: 8px;
+  overflow: hidden;
+  min-height: 0;
 }
 .mobile-nav .nav-link {
   padding: 12px 12px;
@@ -297,6 +340,19 @@ a:focus {
   justify-content: center;
   gap: 8px;
   text-align: center;
+}
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 90;
+}
+.nav-overlay.is-visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* Buttons & links */
@@ -369,15 +425,6 @@ a:focus {
 }
 
 /* Intro */
-.intro {
-  padding-top: 44px;
-}
-@media (min-width: 900px) {
-  .intro {
-    padding-top: 72px;
-  }
-}
-
 .intro-grid {
   align-items: start;
 }
@@ -390,30 +437,6 @@ a:focus {
   gap: 14px;
   align-items: center;
   margin: 24px 0 18px 0;
-}
-
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 10px;
-}
-.tag {
-  color: var(--muted);
-  padding: 8px 12px;
-  border-radius: 999px;
-  border: 1px solid var(--border-soft);
-  background: #fff;
-}
-.tag {
-  transition:
-    border-color 0.22s ease,
-    color 0.22s ease,
-    background 0.22s ease;
-}
-.tag:hover {
-  border-color: var(--border);
-  color: var(--text);
 }
 
 /* Photo placeholders */
@@ -431,18 +454,33 @@ a:focus {
 }
 .photo-hero {
   width: 100%;
-  height: min(56vh, 520px);
+  height: min(50vh, 520px);
+  background-image: url("photo.webp");
 }
-.photo-small {
-  width: 100%;
-  height: 360px;
-}
+
+/*Main section and photo settings for mobile*/
 @media (max-width: 899px) {
   .photo-hero {
-    height: 360px;
+    background-image: url("photo-mobile.webp");
   }
-  .photo-small {
-    height: 300px;
+  .cta-row {
+    margin: 16px 0 12px 0;
+  }
+  .cta-row .link {
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--border-soft);
+    background: #fff;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .cta-row .link::after {
+    display: none; /* убираем underline-анимацию, она не нужна для таг-стиля */
+  }
+}
+@media (max-width: 549px) {
+  .photo-hero {
+    height: 180px;
   }
 }
 
@@ -484,77 +522,54 @@ a:focus {
   max-width: 64ch;
 }
 
-/* Services */
-
-.steps {
+/* Steps (titled cards, matched in weight to process-pricing below) */
+.steps-titled {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 0 0 22px 0;
   display: grid;
-  gap: 18px;
+  grid-template-columns: 1fr;
+  gap: 0;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, #fff 0%, var(--bg-soft) 100%);
+  overflow: hidden;
+  box-shadow: 0 10px 26px rgba(2, 6, 23, 0.04);
 }
-.step {
-  display: grid;
-  grid-template-columns: 64px 1fr;
-  gap: 16px;
-  padding: 16px 0;
+.step-titled {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 16px 20px;
+}
+.step-titled + .step-titled {
   border-top: 1px solid var(--border-soft);
 }
-.step:first-child {
-  border-top: 1px solid var(--border-soft);
-}
-.step-num {
+.step-titled .step-num {
   font-family: Manrope, Inter, sans-serif;
   font-weight: 700;
   color: rgba(30, 41, 59, 0.55);
   letter-spacing: 0.06em;
   font-size: 0.95rem;
-  padding-top: 2px;
+  flex: 0 0 auto;
 }
-.step-body .h4 {
-  margin-bottom: 6px;
-}
-.step-body .muted {
+.step-titled .h4 {
   margin: 0;
 }
 
-/* About */
-.about-grid {
-  align-items: start;
-}
-.about-copy p {
-  margin-top: 0;
-  color: var(--muted);
-  max-width: 72ch;
-}
-.about-media {
-  padding-top: 8px;
-}
-
-/* Trust badges */
-.badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-.badge {
-  padding: 10px 12px;
-  border-radius: 999px;
-  border: 1px solid var(--border-soft);
-  background: #fff;
-  color: var(--muted);
-  font-weight: 600;
-  font-size: 0.95rem;
-}
-.badge {
-  transition:
-    border-color 0.22s ease,
-    color 0.22s ease,
-    background 0.22s ease;
-}
-.badge:hover {
-  border-color: var(--border);
-  color: var(--text);
+@media (min-width: 720px) {
+  .steps-titled {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .step-titled {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .step-titled + .step-titled {
+    border-top: none;
+    border-left: 1px solid var(--border-soft);
+  }
 }
 
 /* Contact */
@@ -686,34 +701,6 @@ textarea {
   display: grid;
   gap: 14px;
 }
-.cards-services {
-  grid-template-columns: 1fr;
-}
-@media (min-width: 720px) {
-  .cards-services {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (min-width: 1050px) {
-  .cards-services {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-.cards-cases {
-  grid-template-columns: 3fr;
-}
-@media (min-width: 720px) {
-  .cards-cases {
-    grid-template-columns: repeat(1, 1fr);
-  }
-}
-@media (min-width: 1050px) {
-  .cards-cases {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
 .card {
   display: block;
   padding: 18px 18px 16px 18px;
@@ -738,11 +725,6 @@ textarea {
   letter-spacing: -0.02em;
   margin: 0 0 8px 0;
   font-size: 1.02rem;
-}
-.card-text {
-  margin: 0 0 14px 0;
-  color: var(--muted);
-  max-width: 58ch;
 }
 .card-link {
   position: relative;
@@ -771,37 +753,64 @@ textarea {
   transform: scaleX(1);
 }
 
-/* Steps */
-.steps {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+/* Цены в секции «Как строится работа» */
+.process-pricing {
   display: grid;
-  gap: 18px;
+  gap: 0;
+  margin-top: 22px;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, #fff 0%, var(--bg-soft) 100%);
+  overflow: hidden;
+  box-shadow: 0 10px 26px rgba(2, 6, 23, 0.04);
 }
-.step {
-  display: grid;
-  grid-template-columns: 64px 1fr;
-  gap: 16px;
-  padding: 16px 0;
+
+.process-price {
+  padding: 18px 20px;
+  text-align: center;
+}
+
+.process-price + .process-price {
   border-top: 1px solid var(--border-soft);
 }
-.step:first-child {
-  border-top: 1px solid var(--border-soft);
+
+.process-price-label {
+  margin: 0 0 6px 0;
+  font-family: Manrope, Inter, sans-serif;
+  font-weight: 650;
+  font-size: 0.98rem;
+  letter-spacing: -0.02em;
 }
-.step-num {
+
+.process-price-amount {
+  margin: 0 0 8px 0;
   font-family: Manrope, Inter, sans-serif;
   font-weight: 700;
-  color: rgba(30, 41, 59, 0.55);
-  letter-spacing: 0.06em;
-  font-size: 0.95rem;
-  padding-top: 2px;
+  font-size: clamp(1.2rem, 1.8vw, 1.45rem);
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  color: var(--text);
 }
-.step-body .h4 {
-  margin-bottom: 6px;
-}
-.step-body .muted {
+
+.process-price-note {
   margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+@media (min-width: 720px) {
+  .process-pricing {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .process-price {
+    text-align: left;
+  }
+
+  .process-price + .process-price {
+    border-top: none;
+    border-left: 1px solid var(--border-soft);
+  }
 }
 
 /* Mobile-first responsiveness: hide hero photo on small screens, keep about photo */
@@ -810,16 +819,10 @@ textarea {
     grid-template-columns: 1fr;
   }
   .intro-media {
-    display: none;
-  }
-  .about-grid {
-    grid-template-columns: 1fr;
-  }
-  .about-media {
-    order: 2;
-  }
-  .about-copy {
     order: 1;
+  }
+  .intro-copy {
+    order: 2;
   }
   .contact-grid {
     grid-template-columns: 1fr;
@@ -897,25 +900,6 @@ html {
     transition: none !important;
   }
 }
-/* Ровный вертикальный ритм между секциями */
-.section {
-  padding-top: 64px;
-  padding-bottom: 0;
-}
-
-@media (min-width: 900px) {
-  .section {
-    padding-top: 64px;
-    padding-bottom: 0;
-  }
-}
-
-/* Разделитель задаёт нижний воздух */
-.rule {
-  margin-top: 64px;
-  margin-bottom: 0;
-}
-
 /* Contacts: narrow info, wide form (desktop only) */
 @media (min-width: 900px) {
   .contact-grid {
@@ -923,42 +907,67 @@ html {
   }
 }
 /* карточки кейсов */
-/* Кейсы — фоновая большая цифра */
 .card-cases {
-  position: relative;
-  overflow: hidden; /* чтобы цифра не вылезала за границы */
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 
-.case-bg-number {
-  position: absolute;
-  top: 8%;
-  right: 5%;
-  font-family: Manrope, sans-serif;
-  font-size: clamp(4rem, 12vw, 7rem); /* адаптивный крупный размер */
-  font-weight: 900;
-  line-height: 1;
-  color: var(--muted);
-  opacity: 0.08; /* едва заметно — можно уменьшить до 0.06 */
-  pointer-events: none;
-  user-select: none;
+.case-amount {
+  margin: 0 0 14px 0;
+  font-family: Manrope, Inter, sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--text);
 }
 
-/* Мета-строка с номером дела и судом */
-.case-meta {
-  margin: 6px 0 12px 0;
-  font-size: 0.88rem;
+.case-desc {
+  flex: 1;
+  margin: 0 0 18px 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  max-width: none;
+}
+
+.case-act {
+  display: block;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-soft);
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.22s ease;
+}
+
+.case-act:hover,
+.case-act:focus-visible {
+  color: var(--accent);
+}
+
+.case-act-number {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.case-act-court {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.86rem;
   color: var(--muted-2);
-  font-weight: 500;
+  line-height: 1.35;
+  transition: color 0.22s ease;
 }
 
-/* Результат в конце карточки */
-.case-result {
-  margin-top: 12px;
-  font-size: 1rem;
-  line-height: 1.4;
+.case-act:hover .case-act-court,
+.case-act:focus-visible .case-act-court {
+  color: var(--muted);
 }
 
-/* Мобильный горизонтальный скролл (для 3 карточек почти не нужен, но оставляем) */
+/* Мобильный горизонтальный скролл */
 @media (max-width: 899px) {
   .cards-cases {
     display: flex;
@@ -999,25 +1008,124 @@ html {
   box-shadow: 0 16px 40px rgba(2, 6, 23, 0.07);
   transform: translateY(-3px);
 }
-/* Результат: только слово "Результат:" выделено */
-.case-result {
-  margin-top: 12px;
+/* СМИ — горизонтальная карусель (мобильные и десктоп) */
+.media-carousel {
+  position: relative;
+}
+
+.media-carousel-toolbar {
+  display: none;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.media-carousel-toolbar[aria-hidden="true"] {
+  display: none;
+}
+
+.media-carousel-btn {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid var(--border-soft);
+  background: #fff;
+  color: var(--accent);
+  box-shadow: 0 10px 26px rgba(2, 6, 23, 0.06);
+  cursor: pointer;
+  transition:
+    border-color 0.22s ease,
+    box-shadow 0.22s ease,
+    opacity 0.22s ease,
+    transform 0.18s ease;
+}
+
+.media-carousel-btn:hover:not(:disabled) {
+  border-color: rgba(30, 41, 59, 0.22);
+  box-shadow: 0 16px 40px rgba(2, 6, 23, 0.07);
+  transform: translateY(-1px);
+}
+
+.media-carousel-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+  transform: none;
+}
+
+.cards-media {
+  display: flex;
+  overflow-x: auto;
+  gap: 16px;
+  padding: 4px 0 28px 0;
+  scroll-snap-type: x proximity;
+  margin-bottom: 12px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+.cards-media::-webkit-scrollbar {
+  display: none;
+}
+
+.card-media {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 82%;
+  scroll-snap-align: start;
+  min-height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+.card-media:hover {
+  border-color: rgba(30, 41, 59, 0.22);
+  box-shadow: 0 16px 40px rgba(2, 6, 23, 0.07);
+  transform: translateY(-3px);
+}
+
+.card-media .card-title {
+  flex: 1;
   font-size: 1rem;
-  line-height: 1.4;
+  margin-bottom: 8px;
 }
 
-.result-label {
-  font-weight: 700; /* жирный только для "Результат:" */
-  color: var(--text); /* почти чёрный, чтобы выделялся */
-}
-
-/* Мета-строка теперь внизу */
-.case-meta {
-  margin: 14px 0 0 0; /* небольшой отступ сверху */
-  font-size: 0.86rem;
+.media-outlet {
+  margin: 0 0 8px 0;
+  font-size: 0.8rem;
+  font-weight: 600;
   color: var(--muted-2);
-  font-weight: 500;
-  line-height: 1.35;
 }
 
-/* Остальные стили (фоновая цифра, мобильный скролл, grid) остаются как в предыдущем сообщении */
+.media-date {
+  margin: 0 0 14px 0;
+  font-size: 0.88rem;
+  color: var(--muted-2);
+}
+
+.media .section-head {
+  margin-bottom: 16px;
+}
+
+@media (min-width: 900px) {
+  .media-carousel-toolbar {
+    display: flex;
+  }
+
+  .media-carousel-toolbar[aria-hidden="true"] {
+    display: none;
+  }
+
+  .cards-media {
+    gap: 24px;
+    scroll-snap-type: x mandatory;
+  }
+
+  /* ~3 карточки + край следующей */
+  .card-media {
+    flex: 0 0 calc((100% - 48px) / 3.22);
+  }
+}

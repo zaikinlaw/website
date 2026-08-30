@@ -8,6 +8,7 @@
       content="Согласие на обработку персональных данных."
       name="description"
     />
+    <meta name="robots" content="noindex, nofollow" />
     <!-- Fonts: Manrope (headings) + Inter (text) -->
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
@@ -27,20 +28,25 @@
           <img alt="Андрей Заикин" class="brand-icon" src="logo.png" />
           <span class="brand-text">
             <span class="brand-name">Андрей Заикин</span>
-            <span class="brand-role">Юрист в Челябинске</span>
+            <span class="brand-role">Юридическая практика</span>
           </span>
         </a>
         <nav aria-label="Основная навигация" class="nav">
-          <a class="nav-link" href="index.html#contacts">Контакты</a>
-          <a class="nav-link" href="index.html">На главную</a>
+          <a
+            class="nav-link"
+            href="#"
+            onclick="
+              history.back();
+              return false;
+            "
+            >Вернуться на главную</a
+          >
         </nav>
         <div class="header-actions">
           <a class="link" href="tel:+79090771610" aria-label="Телефон"
             >+7&nbsp;(909)&nbsp;077&nbsp;16&nbsp;10</a
           >
-          <a class="btn btn-primary" href="index.html#contacts"
-            >Обсудить ситуацию</a
-          >
+          <a class="btn btn-primary" href="index.html#contacts">Связаться</a>
         </div>
         <button
           aria-expanded="false"
@@ -56,19 +62,26 @@
       <!-- Mobile menu -->
       <div class="mobile-nav" hidden="" id="mobileNav">
         <div class="container mobile-nav-inner">
-          <a class="nav-link" href="index.html#contacts">Контакты</a>
-          <a class="nav-link" href="index.html">На главную</a>
+          <a
+            class="nav-link"
+            href="#"
+            onclick="
+              history.back();
+              return false;
+            "
+            >Вернуться на главную</a
+          >
           <div class="mobile-cta">
             <a class="link" href="tel:+79090771610" aria-label="Телефон"
               >+7&nbsp;(909)&nbsp;077&nbsp;16&nbsp;10</a
             >
-            <a class="btn btn-primary" href="index.html#contacts"
-              >Обсудить ситуацию</a
-            >
+            <a class="btn btn-primary" href="index.html#contacts">Связаться</a>
           </div>
         </div>
       </div>
     </header>
+
+    <div class="nav-overlay" id="navOverlay" aria-hidden="true"></div>
 
     <main id="main">
       <section class="section">
@@ -77,18 +90,18 @@
           <p>
             Настоящим я (далее «Субъект персональных данных»), во исполнение
             требований Федерального закона от 27.07.2006 № 152-ФЗ «О
-            персональных данных», ознакомлен с Политикой индивидуального
-            предпринимателя Заикина Андрея Вячеславовича в отношении обработки
-            персональных данных, размещенной на сайте zaikin-law.ru (далее –
-            «Сайт») и свободно, своей волей и в своем интересе даю согласие
-            индивидуальному предпринимателю Заикину Андрею Вячеславовичу (ОГРНИП
-            323745600117431, ИНН 744884639553, далее – «Оператор») на обработку
-            моих персональных данных с использованием средств автоматизации, без
-            передачи по внутренней сети Оператора, с передачей по сети Интернет
-            путем сбора, записи, систематизации, накопления, хранения, уточнения
-            (обновления, изменения), извлечения, использования, блокирования,
-            удаления, уничтожения, передачи (предоставления, доступа)
-            персональных данных.
+            персональных данных», подтверждаю ознакомление с Политикой
+            индивидуального предпринимателя Заикина Андрея Вячеславовича в
+            отношении обработки персональных данных, размещенной на сайте
+            zaikin-law.ru (далее – «Сайт») и свободно, своей волей и в своем
+            интересе даю согласие индивидуальному предпринимателю Заикину Андрею
+            Вячеславовичу (ОГРНИП 323745600117431, ИНН 744884639553, далее –
+            «Оператор») на обработку моих персональных данных с использованием
+            средств автоматизации, без передачи по внутренней сети Оператора, с
+            передачей по сети Интернет путем сбора, записи, систематизации,
+            накопления, хранения, уточнения (обновления, изменения), извлечения,
+            использования, блокирования, удаления, уничтожения, передачи
+            (предоставления, доступа) персональных данных.
           </p>
           <p>
             Настоящее согласие на обработку моих персональных данных
@@ -120,7 +133,8 @@
             Датой предоставления согласия на обработку персональных данных
             Субъекта персональных данных является дата отправки заполненной
             веб-формы на Сайте Оператора (нажатие на кнопку отправки веб-формы
-            («Отправить») на соответствующей странице Сайта).
+            ("Отправить" или "Направить детали") на соответствующей странице
+            Сайта).
           </p>
           <p>
             В случае отзыва согласия на обработку персональных данных Оператор
@@ -177,27 +191,63 @@
       // ===== Mobile navigation =====
       const toggle = document.querySelector(".nav-toggle");
       const mobileNav = document.getElementById("mobileNav");
+      const navOverlay = document.getElementById("navOverlay");
 
       function closeMobile() {
         if (!toggle || !mobileNav) return;
 
         toggle.setAttribute("aria-expanded", "false");
-        mobileNav.hidden = true;
+        mobileNav.classList.remove("is-open");
+        navOverlay?.classList.remove("is-visible");
         document.body.classList.remove("no-scroll");
+
+        mobileNav.addEventListener(
+          "transitionend",
+          () => {
+            // скрываем только если меню на момент срабатывания всё ещё закрыто —
+            // защита от «зависшего» события transitionend от прерванной анимации
+            if (!mobileNav.classList.contains("is-open")) {
+              mobileNav.hidden = true;
+            }
+          },
+          { once: true },
+        );
       }
 
       if (toggle && mobileNav) {
+        let menuJustOpened = false;
+
         toggle.addEventListener("click", () => {
           const expanded = toggle.getAttribute("aria-expanded") === "true";
-          toggle.setAttribute("aria-expanded", String(!expanded));
-          mobileNav.hidden = expanded;
-          document.body.classList.toggle("no-scroll", !expanded);
+
+          if (expanded) {
+            closeMobile();
+          } else {
+            toggle.setAttribute("aria-expanded", "true");
+            mobileNav.hidden = false;
+            menuJustOpened = true;
+            // ждём кадр, чтобы браузер применил hidden=false до включения transition
+            requestAnimationFrame(() => {
+              mobileNav.classList.add("is-open");
+              navOverlay?.classList.add("is-visible");
+            });
+            document.body.classList.add("no-scroll");
+
+            // игнорируем «хвостовой» клик от того же тапа ещё 300мс
+            setTimeout(() => {
+              menuJustOpened = false;
+            }, 300);
+          }
         });
 
         mobileNav.addEventListener("click", (e) => {
           if (e.target instanceof Element && e.target.closest("a")) {
             closeMobile();
           }
+        });
+        navOverlay?.addEventListener("click", () => {
+          if (menuJustOpened) return;
+          closeMobile();
         });
 
         document.addEventListener("keydown", (e) => {
