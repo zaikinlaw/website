@@ -878,7 +878,12 @@
           e.preventDefault();
 
           const btn = form.querySelector('button[type="submit"]');
-          if (btn) btn.disabled = true;
+          const btnOriginalText = btn ? btn.textContent : "";
+
+          if (btn) {
+            btn.disabled = true;
+            btn.textContent = "Отправка...";
+          }
 
           const data = new FormData(form);
 
@@ -920,7 +925,10 @@
               "Не получилось отправить сообщение. Напишите, пожалуйста, в Telegram.",
             );
           } finally {
-            if (btn) btn.disabled = false;
+            if (btn) {
+              btn.disabled = false;
+              btn.textContent = btnOriginalText;
+            }
           }
         });
       }
