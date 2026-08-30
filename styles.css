@@ -465,6 +465,7 @@ main > .section:last-child {
 @media (max-width: 899px) {
   .photo-hero {
     background-image: url("photo-mobile.webp");
+    background-position: center;
   }
   .cta-row {
     margin: 16px 0 12px 0;
