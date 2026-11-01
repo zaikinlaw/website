@@ -1133,3 +1133,144 @@ html {
     flex: 0 0 calc((100% - 48px) / 3.22);
   }
 }
+/* Cookie banner */
+.cookie-banner {
+  --cookie-bg: var(--accent);
+
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  /* контент выравнивается по ширине .container, а фон идёт на всю ширину окна */
+  padding: 16px max(20px, calc((100% - var(--container)) / 2));
+  background: var(--cookie-bg);
+  color: #fff;
+  font-size: 0.8rem;
+  box-shadow: 0 -8px 30px rgba(2, 6, 23, 0.18);
+  opacity: 0;
+  transform: translateY(100%);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+.cookie-banner.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.cookie-banner-text {
+  margin: 0;
+  color: #fff;
+  line-height: 1.45;
+  max-width: 80ch;
+}
+.cookie-banner .link,
+.cookie-banner .link.subtle {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.cookie-banner .link::after {
+  display: none;
+}
+
+/* белая кнопка с синим текстом */
+.cookie-banner .cookie-banner-btn,
+.cookie-banner .cookie-banner-btn.btn-primary {
+  flex: 0 0 auto;
+  background: #fff;
+  color: var(--cookie-bg);
+  border-color: #fff;
+}
+.cookie-banner .cookie-banner-btn:hover {
+  background: #e8eefc;
+  border-color: #e8eefc;
+}
+.cookie-banner .cookie-banner-btn:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+@media (max-width: 549px) {
+  .cookie-banner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 14px 14px calc(14px + env(safe-area-inset-bottom, 0px));
+  }
+}
+.cookie-banner-actions {
+  display: flex;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+
+/* «Отказаться»: прозрачная кнопка с белой рамкой */
+.cookie-banner .cookie-banner-decline {
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.6);
+}
+.cookie-banner .cookie-banner-decline:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #fff;
+}
+.cookie-banner .cookie-banner-decline:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+@media (max-width: 549px) {
+  .cookie-banner-actions {
+    flex-direction: column-reverse; /* «Согласен» сверху */
+  }
+  .cookie-banner-actions .btn {
+    width: 100%;
+  }
+}
+
+/* Чекбокс согласия (круглый, с точкой) */
+.consent-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: rgba(71, 85, 105, 0.85);
+  cursor: pointer;
+}
+.consent-check input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  margin: 2px 0 0;
+  border: 2px solid rgba(15, 23, 42, 0.35);
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  transition:
+    border-color 0.22s ease,
+    box-shadow 0.22s ease;
+}
+.consent-check input[type="checkbox"]:hover {
+  border-color: var(--accent);
+}
+.consent-check input[type="checkbox"]:checked {
+  border-color: var(--accent);
+  background: radial-gradient(circle, var(--accent) 0 4px, #fff 4.5px);
+}
+.consent-check input[type="checkbox"]:focus-visible {
+  outline: 2px solid rgba(30, 41, 59, 0.35);
+  outline-offset: 2px;
+  box-shadow: none;
+}

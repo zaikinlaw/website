@@ -18,9 +18,11 @@
     />
     <link href="logo.png" rel="icon" />
     <link href="./styles.css" rel="stylesheet" />
+
+    <!--<Баннер cookie>-->
+    <script src="cookie-consent.js"></script>
   </head>
   <body>
-    
     <header class="site-header">
       <div class="container header-inner">
         <a class="brand" href="index.html">
@@ -31,35 +33,32 @@
           </span>
         </a>
       </div>
-        
     </header>
 
     <div class="container">
-        <h1>Страница не найдена</h1>
-        <p>Возможно, ссылка устарела или была введена с ошибкой.</p>
-        <p class="link"><a href="index.html">На главную</a></p>
+      <h1>Страница не найдена</h1>
+      <p>Возможно, ссылка устарела или была введена с ошибкой.</p>
+      <p class="link"><a href="index.html">На главную</a></p>
     </div>
 
-      <footer class="site-footer">
-        <div class="container footer-inner">
-          <p class="muted" style="margin-bottom: 0">
-            © <span id="year"></span> ИП Заикин Андрей Вячеславович,
-            ‌зарегистрирован МИФНС N 17 ‌по Челябинской области 01.08.2023 г.,
-            ОГРНИП 323745600117431, ‌г. Челябинск
-          </p>
-          <p class="muted" style="margin-top: 0">
-            Просматривая этот сайт, вы даете свое согласие на сбор сведений
-            метрическими программами, включая файлы Cookie.
-            <a class="link subtle" href="policy.html"
-              >Политика конфиденциальности</a
-            >.
-          </p>
-          <div class="footer-links">
-            <a class="link subtle" href="index.html">На главную</a>
-          </div>
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p class="muted" style="margin-bottom: 0">
+          © <span id="year"></span> ИП Заикин Андрей Вячеславович,
+          ‌зарегистрирован МИФНС N 17 ‌по Челябинской области 01.08.2023 г.,
+          ОГРНИП 323745600117431, ‌г. Челябинск
+        </p>
+        <p class="muted" style="margin-top: 0">
+          Сайт использует файлы cookie. Подробнее:
+          <a class="link subtle" href="policy.html"
+            >Политика конфиденциальности</a
+          >.
+        </p>
+        <div class="footer-links">
+          <a class="link subtle" href="index.html">На главную</a>
         </div>
-      </footer>
-    </main>
+      </div>
+    </footer>
 
     <script>
       // ===== Year =====
@@ -67,9 +66,6 @@
       if (yearEl) {
         yearEl.textContent = new Date().getFullYear();
       }
-
-     </script>
+    </script>
   </body>
 </html>
-
-
