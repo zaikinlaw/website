@@ -1,0 +1,330 @@
+/* ==========================================================
+   Декоративный слой: крупные статичные фигуры на фоне и
+   анимация линии этапов.
+   Чтобы убрать: отключить decor.css и decor.js в index.html
+   и удалить элементы с классом decor-* и атрибуты data-draw.
+   ========================================================== */
+
+/* Фигуры лежат под контентом. На светлых блоках они заходят под
+   соседнюю секцию, а тёмные блоки перекрывают их своим фоном. */
+main {
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+}
+.intro,
+.fit,
+.process,
+.media {
+  position: relative;
+}
+.decor-fig {
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+.decor-fig svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Сфера на светлом фоне */
+.decor-sphere-light {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 32% 26%,
+    #fefdfa 0%,
+    #f8f5ee 34%,
+    #efeae0 72%,
+    #e6e1d5 100%
+  );
+}
+
+/* Конус: свет расходится лучами от вершины к основанию */
+.decor-defs {
+  position: absolute;
+}
+.decor-cone {
+  aspect-ratio: 200 / 240;
+  clip-path: url(#decorConeShape);
+  background: conic-gradient(
+    from 156deg at 50% 2.5%,
+    #e8e3d7 0deg,
+    #f2eee4 15deg,
+    #fefdfa 32deg,
+    #f4f1e8 48deg,
+    #f4f1e8 360deg
+  );
+}
+
+/* --- Первый экран: большая сфера свободно за заголовком --- */
+.decor-fig--hero {
+  top: -9vw;
+  left: 7vw;
+  width: clamp(300px, 44vw, 760px);
+}
+
+/* --- Риски: куб целиком справа от центра, заходит под этапы --- */
+.decor-fig--fit {
+  top: 28%;
+  right: 4vw;
+  width: clamp(280px, 30vw, 520px);
+}
+
+/* --- Этапы: конус снизу слева, уходит за тёмный блок --- */
+.decor-fig--process {
+  bottom: 5%;
+  left: 3vw;
+  width: clamp(240px, 26vw, 440px);
+  transform: rotate(-14deg);
+}
+
+/* --- Публикации: конус с наклоном в другую сторону --- */
+.decor-fig--media {
+  top: 3%;
+  right: 13vw;
+  width: clamp(220px, 23vw, 400px);
+  transform: rotate(17deg);
+}
+
+/* --- Кейсы: тёмный куб справа --- */
+.services {
+  position: relative;
+  overflow: clip;
+}
+.services > .container {
+  position: relative;
+  z-index: 1;
+}
+.decor-fig--cases {
+  z-index: 0;
+  bottom: -7%;
+  left: 24vw;
+  width: clamp(420px, 60vw, 1020px);
+}
+
+/* --- Контакты: тёмная сфера слева --- */
+.contact {
+  position: relative;
+  overflow: clip;
+}
+.contact > :not(.decor-fig) {
+  position: relative;
+  z-index: 1;
+}
+.decor-fig--contact {
+  z-index: 0;
+  top: 30%;
+  left: -12vw;
+  width: clamp(380px, 50vw, 820px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 68% 24%,
+    #303949 0%,
+    #252c3e 36%,
+    #1c2334 72%,
+    #1a2132 100%
+  );
+  box-shadow:
+    inset -60px -70px 140px rgba(8, 12, 22, 0.42),
+    inset 14px 14px 60px rgba(248, 245, 239, 0.025);
+}
+
+/* Телефон и планшет: фигуры не меньше трети кадра */
+@media (max-width: 899px) {
+  /* шар выглядывает из-под нижнего края фото справа */
+  .decor-fig--hero {
+    top: 320px;
+    right: 2vw;
+    left: auto;
+    width: clamp(320px, 84vw, 440px);
+  }
+  .decor-fig--fit {
+    top: 30%;
+    right: -14vw;
+    width: max(260px, 66vw);
+  }
+  .decor-fig--process {
+    bottom: 1%;
+    left: -12vw;
+    width: max(230px, 58vw);
+  }
+  .decor-fig--media {
+    top: 2%;
+    right: -6vw;
+    width: max(210px, 54vw);
+  }
+  .decor-fig--cases {
+    bottom: -3%;
+    left: 6vw;
+    width: max(380px, 104vw);
+  }
+  .decor-fig--contact {
+    top: 8%;
+    left: -46vw;
+    width: max(400px, 110vw);
+  }
+}
+
+@media (max-width: 600px) {
+  /* высота фото на телефоне: 75vw (пропорции 4:3 на всю ширину) */
+  .decor-fig--hero {
+    top: calc(75vw - 96px);
+    right: -18vw;
+  }
+}
+
+/* --- Этапы: линия пути и точки (единственная анимация фигур) --- */
+.steps-titled {
+  position: relative;
+}
+.steps-titled::before,
+.steps-titled::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+/* базовая тонкая линия */
+.steps-titled::after {
+  background: var(--border);
+}
+/* прорисованная линия */
+.steps-titled::before {
+  z-index: 1;
+  background: var(--accent-2);
+}
+/* плавность только при появлении: до этого элементы сразу в исходном виде */
+.steps-titled.is-drawn::before {
+  transition: transform 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.step-titled,
+.step-titled + .step-titled {
+  position: relative;
+  border-top: 0;
+}
+.step-titled::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  box-sizing: border-box; /* рамка внутри размера: центр точно на линии */
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1px solid var(--accent-2);
+  background: var(--accent-2);
+}
+.decor-ready .steps-titled:not(.is-drawn) .step-titled::before {
+  background: var(--bg);
+}
+.steps-titled.is-drawn .step-titled::before {
+  transition: background 0.4s ease;
+}
+.steps-titled.is-drawn .step-titled:nth-child(2)::before {
+  transition-delay: 0.55s;
+}
+.steps-titled.is-drawn .step-titled:nth-child(3)::before {
+  transition-delay: 1.1s;
+}
+.steps-titled.is-drawn .step-titled:nth-child(4)::before {
+  transition-delay: 1.65s;
+}
+
+/* десктоп: линия горизонтальная */
+@media (min-width: 720px) {
+  .steps-titled::before,
+  .steps-titled::after {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+  }
+  .steps-titled::before {
+    transform-origin: left;
+  }
+  .decor-ready .steps-titled:not(.is-drawn)::before {
+    transform: scaleX(0);
+  }
+  .step-titled,
+  .step-titled + .step-titled {
+    padding-top: 28px;
+  }
+  .step-titled::before {
+    top: -4px;
+  }
+}
+
+/* телефон: линия вертикальная */
+@media (max-width: 719px) {
+  .steps-titled {
+    padding-left: 26px;
+  }
+  .steps-titled::before,
+  .steps-titled::after {
+    /* от центра первого маркера; ниже последнего линию скрывает заглушка */
+    top: 30.5px;
+    bottom: 0;
+    left: 4px;
+    width: 1px;
+  }
+  .steps-titled::before {
+    transform-origin: top;
+  }
+  .decor-ready .steps-titled:not(.is-drawn)::before {
+    transform: scaleY(0);
+  }
+  .step-titled::before {
+    top: 26px;
+    left: -26px;
+  }
+  /* линия заканчивается на последнем маркере при любой высоте заголовка */
+  .step-titled:last-child::after {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    top: 35px;
+    bottom: 0;
+    left: -26px;
+    width: 9px;
+    background: var(--bg);
+  }
+}
+
+/* --- Кейсы: строки появляются при прокрутке --- */
+.decor-ready .case {
+  position: relative;
+  border-bottom-color: transparent;
+}
+.decor-ready .case::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--border-soft);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.decor-ready .case.is-drawn::after {
+  transform: scaleX(1);
+  transition: transform 1.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.decor-ready .case:not(.is-drawn) > * {
+  opacity: 0;
+  transform: translateY(14px);
+}
+.decor-ready .case.is-drawn > * {
+  transition:
+    opacity 0.9s ease,
+    transform 0.9s ease;
+}
+.decor-ready .case.is-drawn > .case-desc {
+  transition-delay: 0.15s;
+}
+.decor-ready .case.is-drawn > .case-act {
+  transition-delay: 0.25s;
+}

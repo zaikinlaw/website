@@ -10,14 +10,17 @@
     />
     <meta name="robots" content="index, follow" />
 
-    <!-- Fonts: Manrope (headings) + Inter (text) -->
+    <!-- Fonts: Source Serif 4 (headings) + Inter (text) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles.css" />
+    <!-- Декоративный слой -->
+    <link rel="stylesheet" href="./decor.css" />
+    <script src="decor.js" defer></script>
     <link rel="canonical" href="https://zaikin-law.ru/" />
 
     <!--OpenGraph-->
@@ -146,12 +149,6 @@
           <a class="nav-link" href="#process">Этапы и цены</a>
           <a class="nav-link" href="#cases">Опыт</a>
           <a class="nav-link" href="#media">Публикации</a>
-          <div class="mobile-cta">
-            <a class="link" href="tel:+79090771610" aria-label="Телефон"
-              >+7&nbsp;(909)&nbsp;077&nbsp;16&nbsp;10</a
-            >
-            <a class="btn btn-primary" href="#contacts">Связаться</a>
-          </div>
         </div>
       </div>
     </header>
@@ -161,6 +158,7 @@
     <main id="main">
       <!-- Intro / Text-first hero -->
       <section class="section intro">
+        <div class="decor-fig decor-fig--hero decor-sphere-light" aria-hidden="true"></div>
         <div class="container grid-2 intro-grid">
           <div class="intro-copy">
             <h1 class="h1">Защита от субсидиарной ответственности</h1>
@@ -197,6 +195,27 @@
 
       <!-- Риски -->
       <section class="section fit">
+        <div class="decor-fig decor-fig--fit" aria-hidden="true">
+          <svg viewBox="0 0 200 193" fill="none">
+            <defs>
+              <linearGradient id="cubeLightTop" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#fefdfa" />
+                <stop offset="1" stop-color="#f7f3ea" />
+              </linearGradient>
+              <linearGradient id="cubeLightLeft" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#f6f3eb" />
+                <stop offset="1" stop-color="#efebe1" />
+              </linearGradient>
+              <linearGradient id="cubeLightFront" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#f0ece2" />
+                <stop offset="1" stop-color="#e9e4d9" />
+              </linearGradient>
+            </defs>
+            <path d="M6 0 124.9 1.2 200 38.7 57 43.2Z" fill="url(#cubeLightTop)" />
+            <path d="M0 122.5 43.1 193.1 57 43.2 6 0Z" fill="url(#cubeLightLeft)" />
+            <path d="M43.1 193.1 172.6 170.5 200 38.7 57 43.2Z" fill="url(#cubeLightFront)" />
+          </svg>
+        </div>
         <div class="container">
           <div class="grid-2 fit-grid split-divider">
             <div class="fit-col">
@@ -247,12 +266,18 @@
       </section>
 
       <section class="section process">
+        <svg class="decor-defs" width="0" height="0" aria-hidden="true">
+          <clipPath id="decorConeShape" clipPathUnits="objectBoundingBox">
+            <path d="M.5 .025 .06 .8667A.44 .1 0 0 0 .94 .8667Z" />
+          </clipPath>
+        </svg>
+        <div class="decor-fig decor-fig--process decor-cone" aria-hidden="true"></div>
         <div class="container">
           <div class="section-head" id="process">
             <h2 class="h2">Этапы и цены</h2>
           </div>
 
-          <ol class="steps-titled" aria-label="Этапы работы">
+          <ol class="steps-titled" aria-label="Этапы работы" data-draw>
             <li class="step-titled">
               <span class="step-num">01</span>
               <h3 class="h4">Разбор ситуации</h3>
@@ -295,6 +320,27 @@
       </section>
 
       <section class="section services">
+        <div class="decor-fig decor-fig--cases" aria-hidden="true">
+          <svg viewBox="0 0 200 181" fill="none">
+            <defs>
+              <linearGradient id="cubeDarkTop" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#2c3447" />
+                <stop offset="1" stop-color="#242b3d" />
+              </linearGradient>
+              <linearGradient id="cubeDarkFront" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#1f2638" />
+                <stop offset="1" stop-color="#1a2132" />
+              </linearGradient>
+              <linearGradient id="cubeDarkRight" x1="1" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#1b2132" />
+                <stop offset="1" stop-color="#171d2d" />
+              </linearGradient>
+            </defs>
+            <path d="M82.6 7.6 187.5 0 117.9 29.7 0 33.9Z" fill="url(#cubeDarkTop)" />
+            <path d="M27.9 160.8 140.1 181.1 117.9 29.7 0 33.9Z" fill="url(#cubeDarkFront)" />
+            <path d="M140.1 181.1 200 122.1 187.5 0 117.9 29.7Z" fill="url(#cubeDarkRight)" />
+          </svg>
+        </div>
         <div class="container">
           <div class="section-head" id="cases">
             <h2 class="h2">Кейсы</h2>
@@ -302,8 +348,8 @@
               <i>Примеры дел, в которых я успешно защитил клиентов</i>
             </p>
           </div>
-          <div class="cards cards-cases">
-            <article class="card card-cases">
+          <div class="cases-list">
+            <article class="case" data-draw>
               <p class="case-amount">2,5&nbsp;млрд&nbsp;₽</p>
               <p class="case-desc muted">
                 Защитил собственника от требований нескольких крупных кредиторов
@@ -322,7 +368,7 @@
               </a>
             </article>
 
-            <article class="card card-cases">
+            <article class="case" data-draw>
               <p class="case-amount">1,3&nbsp;млрд&nbsp;₽</p>
               <p class="case-desc muted">
                 Доказал отсутствие у клиента контроля над должником и связи
@@ -341,7 +387,7 @@
               </a>
             </article>
 
-            <article class="card card-cases">
+            <article class="case" data-draw>
               <p class="case-amount">800&nbsp;млн&nbsp;₽</p>
               <p class="case-desc muted">
                 Не допустил привлечения к ответственности номинального
@@ -365,6 +411,7 @@
       </section>
 
       <section class="section media">
+        <div class="decor-fig decor-fig--media decor-cone" aria-hidden="true"></div>
         <div class="container">
           <div class="section-head" id="media">
             <h2 class="h2">Публикации</h2>
@@ -432,7 +479,9 @@
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <p class="media-outlet">Комментарий для ФедералПресс</p>
+                <p class="media-outlet">
+                  <span>Комментарий для</span> <strong>ФедералПресс</strong>
+                </p>
                 <h3 class="card-title">
                   Крах на молоке: что стало причиной банкротства Тобольского
                   молочного завода
@@ -448,7 +497,8 @@
                 rel="noopener noreferrer"
               >
                 <p class="media-outlet">
-                  Комментарий для Агентства Бизнес Новостей
+                  <span>Комментарий для</span>
+                  <strong>Агентства Бизнес Новостей</strong>
                 </p>
                 <h3 class="card-title">
                   Юристы связали рост корпоративных споров с неплатежами и
@@ -464,7 +514,9 @@
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <p class="media-outlet">Комментарий для Банки.ру</p>
+                <p class="media-outlet">
+                  <span>Комментарий для</span> <strong>Банки.ру</strong>
+                </p>
                 <h3 class="card-title">
                   «Ездил без ОСАГО — после ДТП не смог списать долг». Что грозит
                   недобросовестным должникам
@@ -479,7 +531,9 @@
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <p class="media-outlet">Комментарий для Коммерсантъ-Кавказ</p>
+                <p class="media-outlet">
+                  <span>Комментарий для</span> <strong>Коммерсантъ-Кавказ</strong>
+                </p>
                 <h3 class="card-title">Долги китайской сборки</h3>
                 <p class="media-date">13 апреля 2026</p>
                 <span class="card-link">Читать материал</span>
@@ -492,7 +546,8 @@
                 rel="noopener noreferrer"
               >
                 <p class="media-outlet">
-                  Комментарий для Коммерсантъ-Черноземье
+                  <span>Комментарий для</span>
+                  <strong>Коммерсантъ-Черноземье</strong>
                 </p>
                 <h3 class="card-title">«Мценской крепости» припомнили долги</h3>
                 <p class="media-date">8 апреля 2026</p>
@@ -505,7 +560,9 @@
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <p class="media-outlet">Комментарий для PROбанкротство</p>
+                <p class="media-outlet">
+                  <span>Комментарий для</span> <strong>PROбанкротство</strong>
+                </p>
                 <h3 class="card-title">
                   Суды отказались привлекать Русагро к субсидиарке по долгам
                   агросоюза «АЛЕВ»
@@ -521,6 +578,7 @@
       </section>
 
       <section class="section contact">
+        <div class="decor-fig decor-fig--contact" aria-hidden="true"></div>
         <div class="container grid-2 contact-grid">
           <div class="contact-copy">
             <div class="section-head" id="contacts">
@@ -530,28 +588,26 @@
               Опишите вашу ситуацию в сообщении или через форму — в течение
               суток отвечу и предложу формат работы.
             </p>
+            <div class="contact-actions">
+              <a
+                class="btn btn-primary"
+                href="https://t.me/zaikin_law"
+                aria-label="Написать в Telegram"
+                >Telegram</a
+              >
+              <a
+                class="btn btn-outline"
+                href="tel:+79090771610"
+                aria-label="Позвонить"
+                >+7&nbsp;(909)&nbsp;077&nbsp;16&nbsp;10</a
+              >
+              <a
+                class="btn btn-outline"
+                href="mailto:contact@zaikin-law.ru?subject=%D0%A1%D1%83%D0%B1%D1%81%D0%B8%D0%B4%D0%B8%D0%B0%D1%80%D0%BD%D0%B0%D1%8F%20%D0%BE%D1%82%D0%B2%D0%B5%D1%82%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C"
+                >contact@zaikin-law.ru</a
+              >
+            </div>
             <div class="contact-meta">
-              <div class="meta-row">
-                <span class="meta-label">Связь</span>
-                <span class="meta-value">
-                  <a
-                    class="link"
-                    href="https://t.me/zaikin_law"
-                    aria-label="Telegram"
-                    >Telegram</a
-                  >
-                  <br />
-                  <a class="link" href="tel:+79090771610" aria-label="Телефон"
-                    >+7&nbsp;(909)&nbsp;077&nbsp;16&nbsp;10</a
-                  >
-                  <br />
-                  <a
-                    class="link"
-                    href="mailto:contact@zaikin-law.ru?subject=%D0%A1%D1%83%D0%B1%D1%81%D0%B8%D0%B4%D0%B8%D0%B0%D1%80%D0%BD%D0%B0%D1%8F%20%D0%BE%D1%82%D0%B2%D0%B5%D1%82%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C"
-                    >contact@zaikin-law.ru</a
-                  >
-                </span>
-              </div>
               <div class="meta-row">
                 <span class="meta-label">География</span>
                 <span class="meta-value">Все регионы РФ</span>
