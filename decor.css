@@ -293,6 +293,27 @@ main {
   }
 }
 
+/* --- Тёмные блоки: фон виден сразу, плавно появляется только содержимое --- */
+.services.reveal,
+.contact.reveal {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+.services.reveal > .container,
+.contact.reveal > :not(.decor-fig) {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease;
+}
+.services.reveal.is-visible > .container,
+.contact.reveal.is-visible > :not(.decor-fig) {
+  opacity: 1;
+  transform: none;
+}
+
 /* --- Кейсы: строки появляются при прокрутке --- */
 .decor-ready .case {
   position: relative;
@@ -319,12 +340,12 @@ main {
 }
 .decor-ready .case.is-drawn > * {
   transition:
-    opacity 0.9s ease,
-    transform 0.9s ease;
+    opacity 0.5s ease,
+    transform 0.5s ease;
 }
 .decor-ready .case.is-drawn > .case-desc {
-  transition-delay: 0.15s;
+  transition-delay: 0.08s;
 }
 .decor-ready .case.is-drawn > .case-act {
-  transition-delay: 0.25s;
+  transition-delay: 0.14s;
 }

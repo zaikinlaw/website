@@ -15,7 +15,7 @@
         }
       });
     },
-    { threshold: 0.25, rootMargin: "0px 0px -6% 0px" },
+    { threshold: 0, rootMargin: "0px" },
   );
   document.querySelectorAll("[data-draw]").forEach(function (el) {
     drawObserver.observe(el);
