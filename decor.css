@@ -158,9 +158,11 @@ main {
     width: max(210px, 54vw);
   }
   .decor-fig--cases {
-    bottom: -3%;
+    top: 50%;
+    bottom: auto;
     left: 6vw;
     width: max(380px, 104vw);
+    transform: translateY(-50%);
   }
   .decor-fig--contact {
     top: 8%;
